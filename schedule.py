@@ -65,6 +65,7 @@ async def on_message(message):
     
     await bot.process_commands(message)
 
+#コード内をテキストファイルに変換
 @bot.command()
 async def scode(ctx):
     filename = __file__
