@@ -1,9 +1,11 @@
 import discord
 import config
+import os
 from discord.ext import tasks, commands
 
 intents = discord.Intents.default()
 intents.voice_states = True
+intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
@@ -23,5 +25,18 @@ async def on_voice_state_update(member, before, after):
     elif after.channel is None and before.channel and before.channel.id in voice:
         channel = before.channel
         await botR.send(f"{member}が{channel.name}から退室したぞ")
+
+@bot.command()
+async def scode(ctx):
+    filename = __file__
+
+    with open(filename, 'r') as file:
+        code = file.read()
+    
+    if len(code) <= 2000:
+        await ctx.send(f"-------pythonコードは↓-------\n{code}\n'''")
+    else:
+        for i in range(0, len(code), 2000):
+            await ctx.send(f"-------pythonコードは↓\n{code[i:i+2000]}\n-------")
 
 bot.run(config.TOKEN)
