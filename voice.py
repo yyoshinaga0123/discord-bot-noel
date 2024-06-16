@@ -26,17 +26,18 @@ async def on_voice_state_update(member, before, after):
         channel = before.channel
         await botR.send(f"{member}が{channel.name}から退室したぞ")
 
+#コード内をテキストファイルに変換
 @bot.command()
 async def scode(ctx):
     filename = __file__
 
     with open(filename, 'r') as file:
         code = file.read()
-    
-    if len(code) <= 2000:
-        await ctx.send(f"-------pythonコードは↓-------\n{code}\n'''")
-    else:
-        for i in range(0, len(code), 2000):
-            await ctx.send(f"-------pythonコードは↓\n{code[i:i+2000]}\n-------")
+
+    temp_filename = 'code.txt'
+    with open(temp_filename, 'w')as temp_file:
+        temp_file.write(code)
+
+    await ctx.send(file=discord.File(temp_filename))
 
 bot.run(config.TOKEN)
