@@ -2,6 +2,7 @@ import discord
 import requests
 import os
 import config
+import os
 from discord.ext import tasks, commands
 
 intents = discord.Intents.default()
