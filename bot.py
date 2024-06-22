@@ -1,9 +1,10 @@
 import discord
 import config
 import pytz
-import random        
+import random
 import requests
-import os                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+import os
+import aiofiles                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             # type: ignore
 from datetime import datetime
 from discord.ext import tasks, commands
 
@@ -154,18 +155,29 @@ async def devent(ctx):
     await ctx.send(response)
 #--------------------------------------------------------------------------------
 
-
-#--------------------------------------------------------------------------------
-#@bot.command()
-#--------------------------------------------------------------------------------
-
-
 #--------------------------------------------------------------------------------
 #コード内をテキストファイルに変換
 @bot.command()
 async def scode(ctx):
-    filename = __file__
+    try:
+        print("ここまでヨシ！")
+        filename = __file__
 
+        print("ここからが問題？")
+        with open(filename, 'r') as file:
+            code = file.read()
+    
+        temp_filename = 'code.txt'
+
+        with open(temp_filename, 'w') as temp_file:
+            temp_file.write(code)
+
+        await ctx.send(file=discord.File(temp_filename))
+
+    except Exception as e:
+        await ctx.send(f"error{e}")
+
+'''
     with open(filename, 'r') as file:
         code = file.read()
 
@@ -174,6 +186,7 @@ async def scode(ctx):
         temp_file.write(code)
 
     await ctx.send(file=discord.File(temp_filename))
+'''
 #--------------------------------------------------------------------------------
 
 
